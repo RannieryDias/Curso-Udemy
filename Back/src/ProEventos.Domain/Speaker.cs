@@ -8,7 +8,7 @@ namespace ProEventos.Domain
         public string ImageURL { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-        public IEnumerable<SocialNetwork> SocialNetworks { get; set; }
-        public IEnumerable<EventSpeaker> EventSpeakers { get; set; }
+        public IEnumerable<SocialNetwork>? SocialNetworks { get; set; }
+        public IEnumerable<EventSpeaker>? EventSpeakers { get; set; }
     }
 }

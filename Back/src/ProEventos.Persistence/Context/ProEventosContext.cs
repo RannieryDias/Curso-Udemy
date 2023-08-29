@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ProEventos.Domain;
 
-namespace ProEventos.Persistence
+namespace ProEventos.Persistence.Context
 {
     public class ProEventosContext : DbContext
     {
@@ -15,8 +15,20 @@ namespace ProEventos.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<EventSpeaker>()
                         .HasKey(x => new {x.EventId, x.SpeakerId});
+
+            modelBuilder.Entity<Event>()
+                .HasMany(x => x.SocialNetworks)
+                .WithOne(x => x.Event)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Speaker>()
+                .HasMany(x => x.SocialNetworks)
+                .WithOne(x => x.Speaker)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
