@@ -44,8 +44,8 @@ export class EventosComponent {
   }
 
   constructor(private eventService: EventService,
-              private modalService: BsModalService) {}
-              // private toastr: ToastrService) {}
+              private modalService: BsModalService,
+              private toastr: ToastrService) {}
               // private spinner: NgxSpinnerService) {}
 
   public ngOnInit(): void {
@@ -94,7 +94,7 @@ export class EventosComponent {
 
   confirm(): void {
     this.modalRef?.hide();
-    // this.toastr.success('Evento apagado', 'Sucesso')
+    this.toastr.success('Evento apagado', 'Sucesso')
   }
 
   decline(): void {
