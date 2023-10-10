@@ -3,7 +3,7 @@ import { EventService } from '../services/event.service';
 import { EventModel } from '../models/EventModel';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
-// import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-eventos',
@@ -45,17 +45,17 @@ export class EventosComponent {
 
   constructor(private eventService: EventService,
               private modalService: BsModalService,
-              private toastr: ToastrService) {}
-              // private spinner: NgxSpinnerService) {}
+              private toastr: ToastrService,
+              private spinner: NgxSpinnerService) {}
 
   public ngOnInit(): void {
      /** spinner starts on init */
-    //  this.spinner.show();
+     this.spinner.show();
 
-    //  setTimeout(() => {
-    //    /** spinner ends after 5 seconds */
-    //    this.spinner.hide();
-    //  }, 5000);
+     setTimeout(() => {
+       /** spinner ends after 5 seconds */
+       this.spinner.hide();
+     }, 5000);
     this.getEvents();
   }
 
