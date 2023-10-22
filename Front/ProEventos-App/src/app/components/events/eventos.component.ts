@@ -1,9 +1,9 @@
 import { Component, TemplateRef } from '@angular/core';
-import { EventService } from '../services/event.service';
-import { EventModel } from '../models/EventModel';
+import { EventService } from '../../services/event.service';
+import { EventModel } from '../../models/EventModel';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
-// import { NgxSpinnerService } from 'ngx-spinner';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-eventos',
@@ -23,57 +23,55 @@ export class EventosComponent {
 
   private filterListed: string = '';
 
-  public get filterList(){
+  public get filterList() {
     return this.filterListed;
   }
 
-  public set filterList(value: string){
+  public set filterList(value: string) {
     this.filterListed = value
     this.filteredEventos = this.filterList ?
-                                    this.filterEvent(this.filterList) :
-                                    this.eventos;
+      this.filterEvent(this.filterList) :
+      this.eventos;
   }
 
-  public filterEvent(filterBy: string): EventModel[]{
+  public filterEvent(filterBy: string): EventModel[] {
     filterBy = filterBy.toLocaleLowerCase();
     return this.eventos.filter(
-      (evento : EventModel) => evento.theme.toLocaleLowerCase()
-                           .indexOf(filterBy) !== -1 ||
-      evento.location.toLocaleLowerCase().indexOf(filterBy) !== -1
+      (evento: EventModel) => evento.theme.toLocaleLowerCase()
+        .indexOf(filterBy) !== -1 ||
+        evento.location.toLocaleLowerCase().indexOf(filterBy) !== -1
     );
   }
 
   constructor(private eventService: EventService,
-              private modalService: BsModalService) {}
-              // private toastr: ToastrService) {}
-              // private spinner: NgxSpinnerService) {}
+    private modalService: BsModalService,
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService) { }
 
   public ngOnInit(): void {
-     /** spinner starts on init */
-    //  this.spinner.show();
-
-    //  setTimeout(() => {
-    //    /** spinner ends after 5 seconds */
-    //    this.spinner.hide();
-    //  }, 5000);
+    this.spinner.show();
     this.getEvents();
   }
 
-  public changeIsImageCollapsedEvent(): void{
+  public changeIsImageCollapsedEvent(): void {
     this.isImageCollapsed = !this.isImageCollapsed;
   }
 
   public getEvents(): void {
     this.eventService.getEvents().subscribe({
       next: (events: EventModel[]) => this.filteredEventos = this.eventos = events,
-      error: (e) => console.log(e)
+      error: (e) => {
+        this.spinner.hide();
+        this.toastr.error('Erro ao carregar eventos', 'Erro!');
+      },
+      complete: () => this.spinner.hide()
     });
   }
 
   public getEventsByTheme(): void {
     this.eventService.getEvents().subscribe({
       next: (response: EventModel[]) => this.filteredEventos = this.eventos = response,
-      error: (e) => console.log(e)
+      error: (e) => console.log(e),
     });
   }
 
@@ -89,12 +87,12 @@ export class EventosComponent {
   }
 
   openModal(template: TemplateRef<any>): void {
-    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
   }
 
   confirm(): void {
     this.modalRef?.hide();
-    // this.toastr.success('Evento apagado', 'Sucesso')
+    this.toastr.success('Evento apagado', 'Sucesso')
   }
 
   decline(): void {
