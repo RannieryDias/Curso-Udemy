@@ -6,9 +6,12 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { EventosComponent } from './events/eventos.component';
-import { PalestrantesComponent } from './palestrantes/palestrantes.component';
-import { NavComponent } from './nav/nav.component';
+import { EventosComponent } from './components/events/eventos.component';
+import { PalestrantesComponent } from './components/palestrantes/palestrantes.component';
+import { ContactsComponent } from './components/contacts/contacts.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { NavComponent } from './components/shared/nav/nav.component';
 
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -19,14 +22,23 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { EventService } from './services/event.service';
 import { DateTimeFormatPipe } from './helpers/DateTimeFormat.pipe';
+import { TitleComponent } from './components/shared/title/title.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     EventosComponent,
     PalestrantesComponent,
+    ContactsComponent,
+    DashboardComponent,
+    ProfileComponent,
     NavComponent,
-    DateTimeFormatPipe
+    TitleComponent,
+    DateTimeFormatPipe,
+    ContactsComponent,
+    DashboardComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
