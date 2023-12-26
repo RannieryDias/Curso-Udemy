@@ -1,0 +1,108 @@
+<div class="card rounded shadow-sm p-3">
+  <div class="d-flex">
+    <div class="flex-fill pr-3">
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Filtro:</div>
+        </div>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Buscar"
+          [(ngModel)]="filterList"
+        />
+      </div>
+    </div>
+    <div>
+      <a class="d-flex btn btn-outline-primary" routerLink="/eventos/detalhe">
+        <i class="fa fa-plus-circle my-1"></i>
+        <b class="ms-1 d-none d-sm-block">Novo</b>
+      </a>
+    </div>
+  </div>
+  <table class="table table-striped table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>
+          <button
+            type="button"
+            class="btn btn-outline-light btn-sm"
+            (click)="changeIsImageCollapsedEvent()"
+          >
+            <i
+              class="{{ isImageCollapsed ? 'fa fa-eye' : 'fa fa-eye-slash' }}"
+            ></i>
+            {{ isImageCollapsed ? "Mostrar" : "Ocultar" }}
+          </button>
+        </th>
+        <th>#</th>
+        <th>Tema</th>
+        <th class="d-none d-md-table-cell">Local</th>
+        <th>Data</th>
+        <th class="d-none d-md-table-cell">Qtd Pessoas</th>
+        <th class="d-none d-md-table-cell">Lote</th>
+        <th class="d-none d-md-table-cell">Opções</th>
+      </tr>
+    </thead>
+    <!-- *ngs são diretivas estruturais -->
+    <tbody *ngIf="eventos && eventos.length">
+      <tr
+        *ngFor="let evento of filteredEventos"
+        (click)="eventDetail(evento.id)"
+        style="cursor: pointer;"
+      >
+        <td>
+          <img
+            [collapse]="isImageCollapsed"
+            [isAnimated]="true"
+            src="/assets/{{ evento.imageUrl }}"
+            [style.width.px]="widthImg"
+            [style.margin.px]="marginImg"
+          />
+        </td>
+        <td>{{ evento.id }}</td>
+        <td>{{ evento.theme }}</td>
+        <td class="d-none d-md-table-cell">{{ evento.location }}</td>
+        <td>{{ evento.eventDate | DateFormatPipe }}</td>
+        <td class="d-none d-md-table-cell">{{ evento.capacity }}</td>
+        <!-- <td class="d-none d-md-table-cell">{{evento.batches[0].name}}</td> -->
+        <td class="d-none d-md-table-cell">[Placeholder]</td>
+        <!-- <td *ngFor="let batch of evento.batches">
+          {{batch.name}}
+        </td> -->
+        <td>
+          <button
+            type="button"
+            (click)="openModal(template)"
+            class="btn btn-danger btn-b"
+            data-bs-toggle="tooltip"
+            title="Excluir"
+          >
+            <i class="fa fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="filteredEventos.length <= 0">
+      <tr>
+        <td colspan="8" class="text-center">
+          <h4>Nenhum evento encontrado!</h4>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+<!-- <h3>Filtro: {{filterList}}</h3> -->
+
+<!-- {{eventos | json}} -->
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Tem certeza que quer apagar esse Evento?</p>
+    <button type="button" class="btn btn-default" (click)="confirm()">
+      Sim
+    </button>
+    <button type="button" class="btn btn-primary" (click)="decline()">
+      Não
+    </button>
+  </div>
+</ng-template>
