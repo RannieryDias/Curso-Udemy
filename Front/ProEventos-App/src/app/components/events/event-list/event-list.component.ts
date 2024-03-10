@@ -3,8 +3,8 @@ import { Component, TemplateRef } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
-import { EventModel } from 'src/app/models/EventModel';
-import { EventService } from 'src/app/services/event.service';
+import { EventModel } from '@app/models/EventModel';
+import { EventService } from '@app/services/event.service';
 
 @Component({
   selector: 'app-event-list',
